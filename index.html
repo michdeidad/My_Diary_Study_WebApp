@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diario de Estudio</title>
+  <!-- Enlace al archivo de estilos externos -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Encabezado del Sitio -->
+    <header>
+      <h1>Diario de Estudio</h1>
+      <p class="subtitle">Registra tus sesiones y mantén viva tu racha</p>
+    </header>
+
+    <!-- Diseño principal dividido en dos secciones -->
+    <main class="grid-layout">
+      
+      <!-- Panel Izquierdo: Racha y Formulario para añadir nuevas sesiones -->
+      <section class="sidebar">
+        
+        <!-- Tarjeta de Racha Actual y Mejor Racha -->
+        <div class="card streak-card">
+          <h2>Racha de Estudio</h2>
+          <div class="streak-grid">
+            <div class="streak-item">
+              <span class="streak-label">Actual</span>
+              <div class="streak-display">
+                <span class="streak-emoji" role="img" aria-label="Fuego">🔥</span>
+                <span id="streak-number" class="streak-number">0</span>
+              </div>
+            </div>
+            <div class="streak-item">
+              <span class="streak-label">Mejor Racha</span>
+              <div class="streak-display">
+                <span class="streak-emoji" role="img" aria-label="Trofeo">🏆</span>
+                <span id="best-streak-number" class="streak-number best-streak-number">0</span>
+              </div>
+            </div>
+          </div>
+          <!-- Texto dinámico que cambiará según el estado de la racha -->
+          <p id="streak-text" class="streak-text">¡Comienza a estudiar hoy para empezar tu racha!</p>
+        </div>
+
+        <!-- Tarjeta de resumen semanal -->
+        <div class="card week-card">
+          <h2>Esta semana</h2>
+          <div class="week-display">
+            <span id="week-minutes-number" class="week-number">0</span>
+            <span class="week-unit">minutos</span>
+          </div>
+          <p class="week-count"><span id="week-sessions-number">0</span> sesiones de lunes a hoy.</p>
+        </div>
+
+        <!-- Tarjeta del Formulario -->
+        <div class="card form-card">
+          <h2>Registrar Sesión</h2>
+          <form id="session-form" autocomplete="off">
+            <!-- Entrada de Fecha (Por defecto hoy, pero editable) -->
+            <div class="form-group">
+              <label for="fecha">Fecha</label>
+              <input type="date" id="fecha" required>
+            </div>
+            
+            <!-- Entrada de Tema/Asignatura (Texto, Obligatorio) -->
+            <div class="form-group">
+              <label for="tema">Tema de estudio</label>
+              <input type="text" id="tema" placeholder="Ej. JavaScript Arrays, Vocabulario inglés..." required>
+            </div>
+            
+            <!-- Entrada de Minutos (Número mayor a 0, Obligatorio) -->
+            <div class="form-group">
+              <label for="minutos">Minutos estudiados</label>
+              <input type="number" id="minutos" min="1" placeholder="Ej. 45" required>
+            </div>
+
+            <!-- Entrada de Material (Enlace opcional a apuntes, vídeos o recursos) -->
+            <div class="form-group">
+              <label for="material">Enlace de material (opcional)</label>
+              <input type="url" id="material" placeholder="Ej. https://...">
+            </div>
+            
+            <!-- Botón de Registro -->
+            <button type="submit" class="btn-submit">Añadir Sesión</button>
+          </form>
+        </div>
+        
+      </section>
+
+      <!-- Panel Derecho: Historial de sesiones registradas -->
+      <section class="main-content">
+        
+        <div class="card sessions-card">
+          <h2>Historial de Sesiones</h2>
+          
+          <!-- Mensaje alternativo cuando no hay datos guardados -->
+          <div id="sessions-empty" class="empty-state">
+            <p>Aún no has registrado ninguna sesión de estudio.</p>
+            <p class="hint">¡Rellena el formulario de la izquierda para guardar tu primera sesión!</p>
+          </div>
+          
+          <!-- Lista donde se renderizarán las sesiones dinámicamente -->
+          <ul id="sessions-list" class="sessions-list"></ul>
+        </div>
+        
+      </section>
+      
+    </main>
+  </div>
+
+  <!-- Enlace al archivo JavaScript que maneja la lógica -->
+  <script src="app.js"></script>
+</body>
+</html>
