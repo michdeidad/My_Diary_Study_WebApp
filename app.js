@@ -5,6 +5,8 @@
 
 // Key única para guardar nuestros datos en el localStorage del navegador (según AGENTS.md)
 const LOCAL_STORAGE_KEY = 'diario-estudio-sesiones';
+// Key aparte para recordar el tema claro/oscuro (no altera el formato de las sesiones)
+const THEME_STORAGE_KEY = 'diario-estudio-tema';
 
 // --- FUNCIONES DE FECHAS (Usando siempre hora local para evitar desfases de zona horaria) ---
 
@@ -343,11 +345,113 @@ function updateApp() {
 }
 
 
+// --- TEMPORIZADOR DE ESTUDIO (cuenta hacia arriba, vuelca minutos al formulario) ---
+
+// Segundos acumulados y referencia al intervalo activo (null cuando está detenido)
+let timerSeconds = 0;
+let timerInterval = null;
+
+/**
+ * Convierte segundos a texto "HH:MM:SS" con ceros a la izquierda.
+ */
+function formatTimerDisplay(totalSeconds) {
+  const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
+  const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
+  const seconds = String(totalSeconds % 60).padStart(2, '0');
+  return `${hours}:${minutes}:${seconds}`;
+}
+
+/**
+ * Pinta el tiempo actual en cada segmento del widget (HH, MM, SS).
+ */
+function updateTimerDisplay() {
+  const parts = formatTimerDisplay(timerSeconds).split(':');
+  document.getElementById('timer-hh').textContent = parts[0];
+  document.getElementById('timer-mm').textContent = parts[1];
+  document.getElementById('timer-ss').textContent = parts[2];
+}
+
+
+// --- TEMA CLARO / OSCURO (se guarda en localStorage para recordarlo) ---
+
+/**
+ * Aplica el tema ("light" o "dark") al <html> y actualiza el botón flotante.
+ */
+function applyTheme(theme) {
+  const normalized = theme === 'dark' ? 'dark' : 'light';
+  const label = normalized === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+  document.documentElement.dataset.theme = normalized;
+  localStorage.setItem(THEME_STORAGE_KEY, normalized);
+  const themeButton = document.getElementById('theme-toggle');
+  themeButton.textContent = normalized === 'dark' ? '☀️' : '🌙';
+  themeButton.setAttribute('aria-label', label);
+  themeButton.title = label;
+}
+
+/**
+ * Cambia al tema contrario del actual.
+ */
+function toggleTheme() {
+  const current = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+}
+
+/**
+ * Empieza a contar (si ya está en marcha, no hace nada).
+ */
+function startTimer() {
+  if (timerInterval !== null) return;
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimerDisplay();
+  }, 1000);
+}
+
+/**
+ * Detiene el conteo manteniendo el tiempo acumulado (para continuar después).
+ */
+function stopTimer() {
+  clearInterval(timerInterval);
+  timerInterval = null;
+}
+
+/**
+ * Detiene y vuelve a cero.
+ */
+function resetTimer() {
+  stopTimer();
+  timerSeconds = 0;
+  updateTimerDisplay();
+}
+
+/**
+ * Pasa los minutos acumulados al campo "Minutos estudiados" del formulario.
+ * El usuario completa fecha, tema y material y guarda como siempre.
+ */
+function sendTimerToForm() {
+  const minutes = Math.floor(timerSeconds / 60);
+  if (minutes < 1) {
+    alert('El temporizador aún no llega a 1 minuto. Sigue estudiando un poco más.');
+    return;
+  }
+  document.getElementById('minutos').value = minutes;
+  // Llevamos al usuario al formulario para que complete el resto y pulse "Añadir Sesión"
+  // (sin desplazamiento animado si el usuario prefiere movimiento reducido)
+  const smoothScroll = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+  document.getElementById('session-form').scrollIntoView({ behavior: smoothScroll, block: 'center' });
+  document.getElementById('tema').focus();
+}
+
+
 // --- CONFIGURACIÓN DE EVENTOS AL INICIAR LA PÁGINA ---
 
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('session-form');
   const fechaInput = document.getElementById('fecha');
+
+  // 0. Aplicar el tema guardado (por defecto claro) antes de pintar nada
+  applyTheme(localStorage.getItem(THEME_STORAGE_KEY) || 'light');
+  document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
 
   // 1. Establecer por defecto la fecha de hoy en el campo del formulario
   fechaInput.value = getTodayLocalDateString();
@@ -399,4 +503,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 4. Renderizado inicial de la aplicación al abrirla
   updateApp();
+
+  // 5. Temporizador: botones de empezar, detener, reiniciar y pasar minutos al formulario
+  document.getElementById('timer-start').addEventListener('click', startTimer);
+  document.getElementById('timer-stop').addEventListener('click', stopTimer);
+  document.getElementById('timer-reset').addEventListener('click', resetTimer);
+  document.getElementById('timer-add').addEventListener('click', sendTimerToForm);
+  updateTimerDisplay();
 });

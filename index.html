@@ -44,6 +44,19 @@
           <p id="streak-text" class="streak-text">¡Comienza a estudiar hoy para empezar tu racha!</p>
         </div>
 
+        <!-- Tarjeta del temporizador: en flujo normal para que nunca se superponga -->
+        <div class="timer-card">
+          <h2>Temporizador</h2>
+          <div id="timer-display" class="timer-display" role="timer" aria-label="Tiempo estudiado"><span class="timer-box" id="timer-hh">00</span><span class="timer-sep">:</span><span class="timer-box" id="timer-mm">00</span><span class="timer-sep">:</span><span class="timer-box" id="timer-ss">00</span></div>
+          <span class="timer-label">Cuenta tu tiempo de estudio</span>
+          <div class="timer-buttons">
+            <button type="button" id="timer-start" class="btn-timer" aria-label="Empezar temporizador">Empezar</button>
+            <button type="button" id="timer-stop" class="btn-timer" aria-label="Detener temporizador">Detener</button>
+            <button type="button" id="timer-reset" class="btn-timer" aria-label="Reiniciar temporizador">Reiniciar</button>
+            <button type="button" id="timer-add" class="btn-timer btn-timer-add" title="Pasar minutos al formulario" aria-label="Registrar tiempo en el formulario">+</button>
+          </div>
+        </div>
+
         <!-- Tarjeta de resumen semanal -->
         <div class="card week-card">
           <h2>Esta semana</h2>
@@ -109,6 +122,9 @@
       
     </main>
   </div>
+
+  <!-- Botón flotante de cambio de tema (claro/oscuro), fijo en la esquina inferior derecha -->
+  <button type="button" id="theme-toggle" class="btn-theme" aria-label="Cambiar a modo oscuro" title="Cambiar a modo oscuro">🌙</button>
 
   <!-- Enlace al archivo JavaScript que maneja la lógica -->
   <script src="app.js"></script>

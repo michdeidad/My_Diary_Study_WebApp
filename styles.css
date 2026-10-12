@@ -3,13 +3,15 @@
   --primary: #4f46e5;       /* Color morado/azul índigo para botones y acentos */
   --primary-hover: #4338ca; /* Tono más oscuro de índigo para hover */
   --secondary: #f97316;     /* Color naranja brillante para el fuego/racha */
-  --bg-app: #f3f4f6;        /* Gris muy claro de fondo de pantalla */
-  --bg-card: #ffffff;       /* Blanco puro para los contenedores (tarjetas) */
-  --text-main: #1f2937;     /* Gris oscuro para textos principales (alta legibilidad) */
-  --text-muted: #6b7280;    /* Gris medio para descripciones o textos secundarios */
-  --border: #e5e7eb;        /* Gris claro para líneas divisorias y bordes */
+  --bg-app: #f6f2e9;        /* Papel cálido de fondo (voz de cuaderno) */
+  --bg-card: #fffdf7;       /* Blanco roto para los contenedores (tarjetas) */
+  --bg-soft: #f1ece0;       /* Tono suave para campos e ítems sobre la tarjeta */
+  --text-main: #201a15;     /* Tinta cálida para textos principales */
+  --text-muted: #78716c;    /* Gris cálido para textos secundarios */
+  --border: #e6ddc9;        /* Borde color papel tostado */
   --radius: 12px;           /* Esquinas redondeadas y modernas */
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --font-display: Georgia, "Palatino Linotype", "Times New Roman", serif; /* Serif de cuaderno para titulares y cifras */
 }
 
 /* Reset básico para que todo se vea igual en cualquier navegador */
@@ -40,13 +42,16 @@ header {
 }
 
 header h1 {
-  font-size: 2.2rem;
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
+  font-weight: 700;
   color: var(--primary);
   margin-bottom: 8px;
 }
 
 header .subtitle {
+  font-family: var(--font-display);
+  font-style: italic;
   color: var(--text-muted);
   font-size: 1.1rem;
 }
@@ -77,7 +82,8 @@ header .subtitle {
 }
 
 .card h2 {
-  font-size: 1.25rem;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
   font-weight: 700;
   color: var(--text-main);
   margin-bottom: 16px;
@@ -89,7 +95,7 @@ header .subtitle {
 .streak-card {
   text-align: center;
   /* Fondo con un gradiente cálido de naranja suave */
-  background: linear-gradient(135deg, #ffffff 0%, #fff9f3 100%);
+  background: linear-gradient(135deg, var(--bg-card) 0%, #fff9f3 100%);
   border: 1px solid #ffedd5;
 }
 
@@ -112,11 +118,9 @@ header .subtitle {
 }
 
 .streak-label {
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
+  font-size: 0.85rem;
+  font-weight: 600;
   color: var(--text-muted);
-  letter-spacing: 0.5px;
 }
 
 .streak-display {
@@ -134,8 +138,9 @@ header .subtitle {
 }
 
 .streak-number {
+  font-family: var(--font-display);
   font-size: 2.8rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--secondary);
   line-height: 1;
 }
@@ -158,8 +163,9 @@ header .subtitle {
 }
 
 .week-number {
+  font-family: var(--font-display);
   font-size: 2.8rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--primary);
   line-height: 1;
 }
@@ -214,7 +220,7 @@ header .subtitle {
   font-size: 1rem;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background-color: #f9fafb;
+  background-color: var(--bg-soft);
   color: var(--text-main);
   transition: all 0.2s ease;
 }
@@ -222,8 +228,92 @@ header .subtitle {
 .form-group input:focus {
   outline: none;
   border-color: var(--primary);
-  background-color: #ffffff;
+  background-color: var(--bg-card);
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+/* Botón flotante de cambio de tema (claro/oscuro), fijo en la esquina inferior derecha */
+.btn-theme {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 100;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: #ffffff;
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.45);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.btn-theme:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.55);
+}
+
+.btn-theme:active {
+  transform: scale(0.95);
+}
+
+/* --- MODO OSCURO (se activa con data-theme="dark" en <html>) --- */
+[data-theme="dark"] {
+  --primary: #818cf8;       /* Índigo más claro para contrastar sobre fondo oscuro */
+  --primary-hover: #6366f1;
+  --bg-app: #0f172a;        /* Azul noche de fondo */
+  --bg-card: #1e293b;       /* Tarjetas gris azulado */
+  --text-main: #f1f5f9;     /* Texto casi blanco */
+  --text-muted: #94a3b8;    /* Gris azulado para secundarios */
+  --border: #334155;
+  --bg-soft: #0b1322;        /* Superficies suaves en modo oscuro */
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .streak-card {
+  background: linear-gradient(135deg, #1e293b 0%, #2a1a0a 100%);
+  border-color: #7c2d12;
+}
+
+[data-theme="dark"] .streak-item {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-color: #7c2d12;
+}
+
+[data-theme="dark"] .form-group input {
+  background-color: var(--bg-soft);
+  border-color: var(--border);
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .form-group input:focus {
+  background-color: var(--bg-card);
+}
+
+[data-theme="dark"] .session-item {
+  background-color: var(--bg-soft);
+}
+
+[data-theme="dark"] .session-item:hover {
+  background-color: #16213a;
+}
+
+[data-theme="dark"] .session-time {
+  background-color: #312e81;
+  color: #c7d2fe;
+}
+
+[data-theme="dark"] .btn-delete {
+  background-color: #1e293b;
+  color: #f87171;
+  border-color: #7f1d1d;
+}
+
+[data-theme="dark"] .btn-delete:hover {
+  background-color: #3b1d1d;
 }
 
 /* Botón de envío */
@@ -277,7 +367,7 @@ header .subtitle {
   justify-content: space-between;
   align-items: center;
   padding: 14px 16px;
-  background-color: #f9fafb;
+  background-color: var(--bg-soft);
   border: 1px solid var(--border);
   border-radius: 8px;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
@@ -286,7 +376,7 @@ header .subtitle {
 .session-item:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  background-color: #ffffff;
+  background-color: var(--bg-card);
 }
 
 /* Detalles a la izquierda */
@@ -355,4 +445,190 @@ header .subtitle {
 
 .btn-delete:hover {
   background-color: #fef2f2;
+}
+
+/* --- TEMPORIZADOR DE ESTUDIO (tarjeta en la columna lateral) ---
+   Base en modo claro; el estilo gaming negro/verde vive en [data-theme="dark"] */
+.timer-card {
+  background: var(--bg-card);
+  border: 1px solid #bbf7d0;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.timer-card h2 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #16a34a;
+  text-align: center;
+  margin-bottom: 16px;
+  border-bottom: 2px solid #bbf7d0;
+  padding-bottom: 8px;
+}
+
+.timer-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.timer-box {
+  font-family: "Consolas", "Menlo", monospace;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #15803d;
+  background-color: #f0fdf4;
+  border: 1px solid #86efac;
+  border-radius: 4px;
+  padding: 4px 8px;
+  min-width: 2ch;
+  text-align: center;
+}
+
+.timer-sep {
+  font-family: "Consolas", "Menlo", monospace;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #16a34a;
+}
+
+.timer-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #16a34a;
+  margin-bottom: 6px;
+}
+
+.timer-buttons {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-timer {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #15803d;
+  background-color: #ffffff;
+  border: 1px solid #86efac;
+  border-radius: 6px;
+  padding: 6px 8px;
+  min-height: 32px;
+  cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.2s ease;
+}
+
+.btn-timer:hover {
+  background-color: #f0fdf4;
+}
+
+.btn-timer:active {
+  transform: scale(0.95);
+}
+
+.btn-timer-add {
+  background-color: #22c55e;
+  border-color: #22c55e;
+  color: #ffffff;
+  min-width: 32px;
+}
+
+.btn-timer-add:hover {
+  background-color: #16a34a;
+}
+
+/* Temporizador en modo oscuro: estilo gaming (dígitos verdes sobre negro) */
+[data-theme="dark"] .timer-card {
+  background: #050505;
+  border-color: #00e676;
+  box-shadow: 0 0 12px rgba(0, 230, 118, 0.25), var(--shadow);
+}
+
+[data-theme="dark"] .timer-card h2 {
+  color: #4caf50;
+  border-bottom-color: rgba(0, 230, 118, 0.3);
+}
+
+[data-theme="dark"] .timer-box {
+  color: #00ff66;
+  background-color: #0a0f0a;
+  border-color: rgba(0, 230, 118, 0.4);
+  text-shadow: 0 0 6px rgba(0, 255, 102, 0.8);
+}
+
+[data-theme="dark"] .timer-sep {
+  color: #00ff66;
+  text-shadow: 0 0 6px rgba(0, 255, 102, 0.8);
+}
+
+[data-theme="dark"] .timer-label {
+  color: #4caf50;
+}
+
+[data-theme="dark"] .btn-timer {
+  color: #00ff66;
+  background-color: #0a0f0a;
+  border-color: rgba(0, 230, 118, 0.5);
+}
+
+[data-theme="dark"] .btn-timer:hover {
+  background-color: #14301c;
+}
+
+[data-theme="dark"] .btn-timer-add {
+  background-color: #00e676;
+  border-color: #00e676;
+  color: #050505;
+}
+
+[data-theme="dark"] .btn-timer-add:hover {
+  background-color: #00c853;
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 20px;
+  }
+
+  .timer-box,
+  .timer-sep {
+    font-size: 1.1rem;
+  }
+
+  .btn-timer {
+    font-size: 0.65rem;
+    padding: 5px 6px;
+  }
+}
+
+/* Foco visible con teclado: piso de accesibilidad */
+.btn-submit:focus-visible,
+.btn-delete:focus-visible,
+.btn-timer:focus-visible,
+.btn-theme:focus-visible,
+.form-group input:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Movimiento reducido: sin latidos ni animaciones */
+@media (prefers-reduced-motion: reduce) {
+  .streak-emoji {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none;
+  }
 }
