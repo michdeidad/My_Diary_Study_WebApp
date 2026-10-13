@@ -39,6 +39,7 @@ dejarlo en la memoria.
 - ✅ Siempre: actualizar `MEMORY.md` al terminar cada tarea. 
 - ⚠️ Pregunta antes: crear archivos nuevos, cambiar el formato de los datos guardados.
 - 🚫 Nunca: añadir dependencias, frameworks o un paso de build.
+- 🚫 Nunca: añadir `opencode.json` ni `.gitignore` a un commit (config local; ignorados vía `.git/info/exclude` en cada clon).
 ## Verificación
 - No hay tests ni lint. Probar abriendo `index.html` en el navegador.
 - Para empezar de cero: DevTools → Application → Local Storage → borrar la clave

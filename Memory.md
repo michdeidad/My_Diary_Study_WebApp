@@ -41,4 +41,6 @@ alfabético coincide con el cronológico.
 - (vacío por ahora)
 ## Protocolo Git y privacidad local (13/10/2026)
 - `opencode.json` y `.gitignore` excluidos vía `.git/info/exclude` (solo local, nunca en commits ni visibles en GitHub) por decisión del usuario.
-- Skill `local-dates`: commit `fix: renombrar skill a local-dates y restaurar formato` (593a387) + push; el renombre era el cambio real, el resto era daño de formato que restauré. 
+- Regla permanente en AGENTS.md (Límites): prohibido commitearlos; vale aunque falte el exclude.
+- Hook local `.git/hooks/pre-commit` (no se commitea): bloquea el commit si alguno está en staged.
+- En clon nuevo: re-añadir ambas líneas al exclude (el exclude y los hooks no viajan con el clon). 
