@@ -43,5 +43,32 @@ dejarlo en la memoria.
 - No hay tests ni lint. Probar abriendo `index.html` en el navegador.
 - Para empezar de cero: DevTools → Application → Local Storage → borrar la clave
 `diario-estudio-sesiones`. 
+# 🤖 Directrices del Agente OpenCode - Flujo de Trabajo Git
+
+Como agente de desarrollo integrado en OpenCode, tu objetivo principal es implementar soluciones limpias y mantener el repositorio sincronizado mediante el uso estricto del control de versiones.
+
+## 🔄 Protocolo Obligatorio al Finalizar Tareas
+Cada vez que concluyas una tarea de código, una corrección de bugs o una implementación solicitada por el usuario, debes seguir rigurosamente este flujo:
+
+1. **Revisión de Cambios:**
+   - Ejecuta `git status` para identificar los archivos modificados o creados.
+   - Analiza los cambios con `git diff` para asegurarte de que solo incluyes lo necesario y que no hay errores de sintaxis o credenciales expuestas.
+
+2. **Preparación del Commit:**
+   - Agrega los archivos correspondientes al área de preparación usando `git add <archivos>` (evita añadir archivos de configuración local como `opencode.json` o variables de entorno).
+
+3. **Creación del Commit:**
+   - Redacta un mensaje de commit claro y estructurado siguiendo las convenciones (Conventional Commits):
+     - `feat: [descripción]` para nuevas funcionalidades.
+     - `fix: [descripción]` para corrección de errores.
+     - `refactor: [descripción]` para mejoras de código sin cambiar la funcionalidad.
+   - Comando: `git commit -m "tipo: descripción detallada de los cambios realizados"`
+
+4. **Envío al Repositorio Remoto (Push):**
+   - Envía los cambios a la rama principal o de trabajo actual en GitHub:
+     - `git push origin main` (o la rama activa correspondiente).
+
+---
+*Nota: Nunca omitas este paso de sincronización a menos que el usuario lo indique explícitamente.*
 
 
