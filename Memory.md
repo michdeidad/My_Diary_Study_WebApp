@@ -36,5 +36,9 @@ alfabético coincide con el cronológico.
 - Los enlaces de usuario solo se pintan como `<a>` si empiezan por `http://` o `https://`
 (`isSafeHttpUrl()`); si no, se muestran como texto para evitar `javascript:`.
 - La skill solo se descubre si el archivo se llama `SKILL.md` en mayúsculas (no `skill.md`).
+- Verificado con Chrome DevTools (12/10/2026): 3 sesiones (hoy/ayer/anteayer) → racha 3 y mejor 3, consola sin errores, móvil 375px sin solapes.
 ## Próximos pasos
-- (vacío por ahora) 
+- Revisar con el usuario `SKILL.md` (formato colapsado en working copy, no commiteado), `.gitignore` vacío y `opencode.json` (config local, excluido por protocolo) antes de commitearlos.
+## Protocolo Git (13/10/2026)
+- Aplicado el protocolo de AGENTS.md: commit `docs: añadir protocolo Git obligatorio del agente OpenCode en AGENTS.md` (4cf5f11) solo con `AGENTS.md` + push a `origin/main` (874a27d..4cf5f11).
+- Excluidos a propósito: `opencode.json` (lo prohíbe el protocolo), `SKILL.md` (regresión de formato) y `.gitignore` vacío. 
