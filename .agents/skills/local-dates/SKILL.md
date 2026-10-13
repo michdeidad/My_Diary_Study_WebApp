@@ -1,5 +1,5 @@
 ---
-name: local_dates
+name: local-dates
 description: Úsala siempre que escribas, modifiques o revises código que trabaje con
 fechas, días, semanas o rachas en el Diario de Estudio.
 ---
@@ -26,4 +26,4 @@ siempre es un día por los cambios de hora).
 - [ ] ¿Se ignoran las fechas futuras donde corresponde?
 
 ## Al terminar
-Indica qué puntos del checklist has comprobado y cómo. 
+Indica qué puntos del checklist has comprobado y cómo.
